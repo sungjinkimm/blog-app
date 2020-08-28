@@ -1,4 +1,13 @@
 body {
-  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-  background-color: lightpink;
+  font-family: 'Montserrat', sans-serif;
+  background-color: rgba(36, 99, 74, 0.8);
+  color: white;
+}
+
+.btn {
+  background-color: transparent;
+}
+
+#index-content {
+  color: lightgray
 }

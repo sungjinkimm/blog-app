@@ -3,23 +3,28 @@
 <div class="container">
   <div class="text-center">
     <h1 class="m-4 p-2">Welcome to Blog App</h1>
-    <a class="btn btn-primary mb-5" href="/blogs/new">New Post</a>
+    <a class="btn btn-info mb-5" href="/blogs/new">New Post</a>
   </div>
 
-  <div class="row text-center">
+  <div class="container text-center" id="index-content">
     <% blogs.forEach((blog)=>{ %>
-    <div class="col-md-3 col-sm-6">
-      <div class="thumbnail">
-        <div class="caption">
-          <h3><%= blog.title %></h3>
-        </div>
-        <img class="img-fluid" src="<%= blog.image %>" alt="" />
-
+    <div class="d-flex border border-dark mb-3">
+      <div class="thumbnail col-4 mt-3">
+        <img class="img-fluid" src="<%= blog.image %>" alt="" id="index-img" />
         <p class="m-2">
-          <a class="btn btn-primary" href="/blogs/<%= blog._id%>">Read more</a>
+          <a class="btn btn-info" href="/blogs/<%= blog._id%>">Read more</a>
         </p>
       </div>
+
+      <div class="col-8">
+        <h3 class="m-2"><u><%= blog.title %></u></h3>
+
+        <p class="mt-5 text-center"><%= blog.body %></p>
+      </div>
     </div>
+
     <% })%>
   </div>
 </div>
+
+
