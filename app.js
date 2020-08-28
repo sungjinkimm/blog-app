@@ -99,31 +99,28 @@ app.get('/blogs/:id/edit', (req, res) => {
 
 // update route
 app.put('/blogs/:id', (req, res) => {
-  
   const blogID = req.params.id;
   const blogBody = req.body.blog;
-  Blog.findByIdAndUpdate(blogID, blogBody, (err, foundBlog)=>{
-    if (err){
-      res.redirect('/blogs')
+  Blog.findByIdAndUpdate(blogID, blogBody, (err, foundBlog) => {
+    if (err) {
+      res.redirect('/blogs');
+    } else {
+      res.redirect('/blogs/' + blogID);
     }
-    else {
-      res.redirect('/blogs/'+ blogID)
-    }
-  })
+  });
 });
 
 // delete route
-app.delete('/blogs/:id', (req, res)=>{
+app.delete('/blogs/:id', (req, res) => {
   const blogID = req.params.id;
-  Blog.findByIdAndRemove(blogID, (err)=>{
-    if (err){
-      res.redirect('/')
+  Blog.findByIdAndRemove(blogID, (err) => {
+    if (err) {
+      res.redirect('/');
+    } else {
+      res.redirect('/blogs');
     }
-    else {
-      res.redirect('/blogs')
-    }
-  })
-})
+  });
+});
 
 // app listener
 app.listen(PORT, () => {

@@ -1,15 +1,20 @@
-<h1>Show Page</h1>
+<%- include ("partials/header.ejs") %>
 
-<h2>
-  <%= blog.title %>
-</h2>
+<div class="container mt-2 border">
+  <div class="text-center">
+    <h1 class="m-4 p-2"><%= blog.title %></h1>
+    <img class="" src="<%= blog.image %> " alt="" />
+    <div class="row justify-content-center p-4">
+      <p><%= blog.body %></p>
+    </div>
+  </div>
 
-<img src="<%= blog.image %> " alt="">
+  <div class="d-flex justify-content-center mb-2">
+    <a class="btn btn-primary mr-1" href="/blogs/<%= blog._id %>/edit ">Edit</a>
+    <form action="/blogs/<%= blog._id %>?_method=DELETE" method="POST">
+      <button class="btn btn-danger ml-1">Delete</button>
+    </form>
+  </div>
+</div>
 
-<p> <%= blog.body %>  </p>
-
-<a href="/blogs">Home</a>
-<form action="/blogs/<%= blog._id %>?_method=DELETE" method="POST">
-<button>Delete</button>
-</form>
-
+<%- include ("partials/footer.ejs") %>
