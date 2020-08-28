@@ -1,0 +1,15 @@
+<h1>Show Page</h1>
+
+<h2>
+  <%= blog.title %>
+</h2>
+
+<img src="<%= blog.image %> " alt="">
+
+<p> <%= blog.body %>  </p>
+
+<a href="/blogs">Home</a>
+<form action="/blogs/<%= blog._id %>?_method=DELETE" method="POST">
+<button>Delete</button>
+</form>
+

@@ -4,16 +4,19 @@ const mongoose = require('mongoose');
 const PORT = process.env.PORT || 5000;
 const bodyParser = require('body-parser');
 const app = express();
+const methodOverride = require('method-override');
 
 // connecting to mongoose and creating db: blogApp
 mongoose.connect('mongodb://localhost:27017/blogApp', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
+mongoose.set('useFindAndModify', false);
 
 // apps
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(methodOverride('_method'));
 
 // mongoose schema
 const blogSchema = mongoose.Schema({
@@ -47,7 +50,7 @@ app.post('/blogs', (req, res) => {
     image: image,
     body: body,
   };
-
+  // sending new blog info to db
   Blog.create(newBlog, (err, blogs) => {
     if (err) {
       console.log('Error Occured' + err);
@@ -56,7 +59,8 @@ app.post('/blogs', (req, res) => {
     }
   });
 });
-// route to get posted info
+
+// route to main page with retrieved blog info from db
 app.get('/blogs', (req, res) => {
   Blog.find({}, (err, allBlogs) => {
     if (err) {
@@ -66,6 +70,60 @@ app.get('/blogs', (req, res) => {
     }
   });
 });
+
+// show more route
+app.get('/blogs/:id', (req, res) => {
+  // res.render('show.ejs')
+  const blogID = req.params.id;
+
+  Blog.findById(blogID, (err, foundBlog) => {
+    if (err) {
+      res.redirect('/');
+    } else {
+      res.render('show.ejs', { blog: foundBlog });
+    }
+  });
+});
+
+// edit route
+app.get('/blogs/:id/edit', (req, res) => {
+  const blogID = req.params.id;
+  Blog.findById(blogID, (err, foundBlog) => {
+    if (err) {
+      res.redirect('/');
+    } else {
+      res.render('edit.ejs', { blog: foundBlog });
+    }
+  });
+});
+
+// update route
+app.put('/blogs/:id', (req, res) => {
+  
+  const blogID = req.params.id;
+  const blogBody = req.body.blog;
+  Blog.findByIdAndUpdate(blogID, blogBody, (err, foundBlog)=>{
+    if (err){
+      res.redirect('/blogs')
+    }
+    else {
+      res.redirect('/blogs/'+ blogID)
+    }
+  })
+});
+
+// delete route
+app.delete('/blogs/:id', (req, res)=>{
+  const blogID = req.params.id;
+  Blog.findByIdAndRemove(blogID, (err)=>{
+    if (err){
+      res.redirect('/')
+    }
+    else {
+      res.redirect('/blogs')
+    }
+  })
+})
 
 // app listener
 app.listen(PORT, () => {

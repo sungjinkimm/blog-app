@@ -1,8 +1,11 @@
 <h1>Welcom to Blog App</h1>
+<a href="/blogs/new">New Post</a>
 
 <% blogs.forEach((blog)=>{ %>
 
 <h3><%= blog.title %></h3>
 <img src="<%= blog.image %>" alt="" />
 <p><%= blog.body %></p>
+<a href="/blogs/<%= blog._id%>">Read more</a>
+<a href="/blogs/<%= blog._id%>/edit">Edit</a>
 <% })%>
