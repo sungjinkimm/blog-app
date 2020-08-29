@@ -23,7 +23,9 @@ const blogSchema = mongoose.Schema({
   title: String,
   image: String,
   body: String,
+  created: {type: Date, default: Date.now},
 });
+
 // mongoose model
 const Blog = mongoose.model('Blog', blogSchema);
 
